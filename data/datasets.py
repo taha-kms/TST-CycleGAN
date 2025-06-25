@@ -68,7 +68,7 @@ class MonostyleDataset(Dataset):
         logging.debug(f"MonostyleDataset, load_data: parsed {len(self.data)} examples")
     
     def _load_data_line_file(self):
-        with open(self.dataset_path) as input_file:
+        with open(self.dataset_path, encoding='utf-8' ) as input_file:
             self.data = input_file.read()
             self.data = self.data.split(self.separator)
         logging.debug(f"MonostyleDataset, load_data: parsed {len(self.data)} examples")   
@@ -178,7 +178,7 @@ class ParallelRefDataset(Dataset):
         logging.debug(f"ParallelRefDataset, load_data: parsed {len(self.data_src)} examples")
 
     def _load_data_line_file(self):
-        with open(self.dataset_path_src) as input_file:
+        with open(self.dataset_path_src, encoding='utf-8') as input_file:
             self.data_src = input_file.read()
             self.data_src = self.data_src.split(self.separator_src)
         if self.style_src in ['neg', 'informal']: ref_tag = '0'
@@ -186,7 +186,7 @@ class ParallelRefDataset(Dataset):
         self.data_ref = [[] for _ in range(len(self.data_src))]
         for i in range(self.n_ref):
             ref_path = self.dataset_path_ref+f'reference{i}.{ref_tag}.txt'
-            with open(ref_path) as input_file:        
+            with open(ref_path, encoding='utf-8') as input_file:        
                 cur_ref = input_file.read()
                 cur_ref = cur_ref.split(self.separator_ref)
             for i, ref in enumerate(cur_ref):
